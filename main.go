@@ -39,7 +39,7 @@ func EjecutoLambda(ctx context.Context, request events.APIGatewayV2HTTPRequest) 
 
 	res = &events.APIGatewayProxyResponse{
 		StatusCode: status,
-		Body:       string(message) + "aqui",
+		Body:       "aqui" + string(message),
 		Headers:    headersResp,
 	}
 
