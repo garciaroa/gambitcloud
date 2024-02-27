@@ -35,7 +35,7 @@ func Manejadores(path string, method string, body string, headers map[string]str
 
 	}
 
-	return 400, "Method Invalido"
+	return 400, "Method Invalido" + string(path)
 }
 
 func ProcesoUsers(body string, path string, method string, user string, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
