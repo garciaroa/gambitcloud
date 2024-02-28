@@ -24,9 +24,9 @@ func InsertCategory(body string, User string) (int, string) {
 		return 400, "Debe especificar el Path (Ruta) de la categoria"
 	}
 
-	isAdmin, msg := bd.UserIsAdmin(User)
+	isAdmin, _ := bd.UserIsAdmin(User)
 	if !isAdmin {
-		return 400, msg
+		return 400, "si aqui" //msg
 	}
 
 	result, err2 := bd.InsertCategory(t)
