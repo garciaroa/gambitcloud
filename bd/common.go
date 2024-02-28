@@ -44,7 +44,7 @@ func ConnStr(claves models.SecretRDSJson) string {
 	dbName = "gambitcloud"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
 	fmt.Println("ConnStr - token - dbUser" + dsn + authToken + dbUser)
-	return "no"
+	return dsn
 }
 
 func UserIsAdmin(userUUID string) (bool, string) {

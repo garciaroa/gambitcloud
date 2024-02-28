@@ -31,7 +31,7 @@ func InsertCategory(body string, User string) (int, string) {
 
 	result, err2 := bd.InsertCategory(t)
 	if err2 != nil {
-		return 400, "Ocurrio un error al intentar realizar el registro de la categoria" + t.CategName + ">" + err2.Error()
+		return 401, "Ocurrio un error al intentar realizar el registro de la categoria" + t.CategName + ">" + err2.Error()
 	}
 
 	return 200, "{CategID: " + strconv.Itoa(int(result)) + "}"
