@@ -13,6 +13,7 @@ import (
 var SecretModel models.SecretRDSJson
 var err error
 var Db *sql.DB
+var DsnGlobal string
 
 func ReadSecret() error {
 	SecretModel, err = secretm.GetSecret(os.Getenv("SecretName"))
@@ -43,6 +44,7 @@ func ConnStr(claves models.SecretRDSJson) string {
 	dbEndpoint = claves.Host
 	dbName = "gambitcloud"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
+	DsnGlobal = dsn
 	fmt.Println("ConnStr - token - dbUser" + dsn + authToken + dbUser)
 	return dsn
 }
@@ -51,7 +53,7 @@ func UserIsAdmin(userUUID string) (bool, string) {
 	fmt.Println("Comienza UserIsAdmin")
 	err := DbConnect()
 	if err != nil {
-		return false, "linea 54" //err.Error()
+		return false, DsnGlobal //err.Error()
 	}
 
 	defer Db.Close()
