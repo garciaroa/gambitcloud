@@ -56,7 +56,7 @@ func UserIsAdmin(userUUID string) (bool, string) {
 
 	defer Db.Close()
 
-	sentencia := "SELECT 1 FROM users WHERE User_UUID='" + userUUID + "' AND User_Status = 0 "
+	/*sentencia := "SELECT 1 FROM users WHERE User_UUID='" + userUUID + "' AND User_Status = 0 "
 	fmt.Println(sentencia)
 	rows, err := Db.Query(sentencia)
 	if err != nil {
@@ -70,7 +70,7 @@ func UserIsAdmin(userUUID string) (bool, string) {
 	fmt.Println("UserIsAdmin > Ejecucion exitosa - valor devuelto" + valor)
 	if valor == "1" {
 		return true, ""
-	}
+	}*/
 
 	return false, "user is not Admin"
 }
