@@ -24,14 +24,14 @@ func InsertCategory(body string, User string) (int, string) {
 		return 400, "Debe especificar el Path (Ruta) de la categoria"
 	}
 
-	isAdmin, _ := bd.UserIsAdmin(User)
+	isAdmin, _ := bd.UserIsAdmin(User) //error 27-02-2024
 	if !isAdmin {
-		return 400, "si aqui" //msg
+		return 400, User //msg
 	}
 
 	result, err2 := bd.InsertCategory(t)
 	if err2 != nil {
-		return 401, "Ocurrio un error al intentar realizar el registro de la categoria" + t.CategName + ">" + err2.Error()
+		return 400, "Ocurrio un error al intentar realizar el registro de la categoria" + t.CategName + ">" + err2.Error()
 	}
 
 	return 200, "{CategID: " + strconv.Itoa(int(result)) + "}"
