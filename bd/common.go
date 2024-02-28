@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/garciaroa/gambitcloud/models"
 	"github.com/garciaroa/gambitcloud/secretm"
@@ -54,7 +53,7 @@ func UserIsAdmin(userUUID string) (bool, string) {
 	fmt.Println("Comienza UserIsAdmin")
 	err := DbConnect()
 	if err != nil {
-		return false, SecretModel.Username + "-" + SecretModel.Password + "-" + SecretModel.Host + "-" + SecretModel.Engine + "-" + SecretModel.DbClusterIdentifier + "-" + strconv.Itoa(SecretModel.Port)
+		return false, "si" // SecretModel.Username + "-" + SecretModel.Password + "-" + SecretModel.Host + "-" + SecretModel.Engine + "-" + SecretModel.DbClusterIdentifier + "-" + strconv.Itoa(SecretModel.Port)
 	}
 
 	defer Db.Close()
