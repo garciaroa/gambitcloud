@@ -38,8 +38,8 @@ func DbConnect() error {
 
 func ConnStr(claves models.SecretRDSJson) string {
 	var dbUser, authToken, dbEndpoint, dbName string
-	dbUser = claves.Username
-	authToken = claves.Password
+	dbUser = "root"           //claves.Username
+	authToken = "gambitcloud" //claves.Password
 	dbEndpoint = claves.Host
 	dbName = "gambitcloud"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
