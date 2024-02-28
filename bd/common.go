@@ -45,7 +45,7 @@ func ConnStr(claves models.SecretRDSJson) string {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
 	//dsn := "root:gambitcloud@tcp(gambitcloud.cfy8magcajrt.us-east-1.rds.amazonaws.com)/gambitcloud?allowCleartextPasswords=true"//fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
 	//DsnGlobal = fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
-	fmt.Println("ConnStr - token - dbUser" + dsn + authToken + dbUser)
+	fmt.Println("si aqui -ConnStr - token - dbUser" + dsn + authToken + dbUser)
 	return dsn
 }
 
