@@ -90,7 +90,7 @@ func UpdateProduct(p models.Product) error {
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Title", "S", 0, 0, p.ProdPath)
 
 	sentencia += " WHERE Prod_Id = " + strconv.Itoa(p.ProdId)
-
+	fmt.Println("Update Product > sentencia antes" + sentencia)
 	_, err = Db.Exec(sentencia)
 	if err != nil {
 		fmt.Println(err.Error())
