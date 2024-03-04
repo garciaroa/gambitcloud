@@ -34,7 +34,7 @@ func InsertProduct(p models.Product) (int64, error) {
 	if len(p.ProdPath) > 0 {
 		sentencia += ", Prod_Path"
 	}
-	sentencia += ") VALUES ('" + tools.EscapeString(p.ProdTitle) + "')"
+	sentencia += ") VALUES ('" + tools.EscapeString(p.ProdTitle) + "'"
 
 	if len(p.ProdDescription) > 0 {
 		sentencia += ", '" + tools.EscapeString(p.ProdDescription) + "'"
