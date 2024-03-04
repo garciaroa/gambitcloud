@@ -32,6 +32,7 @@ func InsertCategory(c models.Category) (int64, error) {
 		return 0, err2
 	}
 
+	fmt.Println("Insert Category > Ejecucion Exitosa")
 	return LastInsertId, nil
 }
 
