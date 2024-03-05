@@ -238,6 +238,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 
 		err := rows.Scan(&ProdId, &ProdTitle, &ProdDescription, &ProdCreatedAt, &ProdUpdated, &ProdPrice, &ProdPath, &ProdCategId, &ProdStock)
 		if err != nil {
+			fmt.Println("selecProducts > 241 :.. " + err.Error())
 			return Resp, err
 		}
 
