@@ -26,7 +26,7 @@ func InsertProduct(p models.Product) (int64, error) {
 	if p.ProdPrice > 0 {
 		sentencia += ", Prod_Price"
 	}
-	if p.ProdCategId > 0 {
+	if p.ProdCategoryId > 0 {
 		sentencia += ", Prod_CategoryId"
 	}
 	if p.ProdStock > 0 {
@@ -43,8 +43,8 @@ func InsertProduct(p models.Product) (int64, error) {
 	if p.ProdPrice > 0 {
 		sentencia += ", " + strconv.FormatFloat(p.ProdPrice, 'e', -1, 64)
 	}
-	if p.ProdCategId > 0 {
-		sentencia += ", " + strconv.Itoa(p.ProdCategId)
+	if p.ProdCategoryId > 0 {
+		sentencia += ", " + strconv.Itoa(p.ProdCategoryId)
 	}
 	if p.ProdStock > 0 {
 		sentencia += ", " + strconv.Itoa(p.ProdStock)
@@ -86,7 +86,7 @@ func UpdateProduct(p models.Product) error {
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Title", "S", 0, 0, p.ProdTitle)
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Description", "S", 0, 0, p.ProdDescription)
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Price", "F", 0, p.ProdPrice, "")
-	sentencia = tools.ArmoSentencia(sentencia, "Prod_CategoryId", "N", p.ProdCategId, 0, "")
+	sentencia = tools.ArmoSentencia(sentencia, "Prod_CategoryId", "N", p.ProdCategoryId, 0, "")
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Stock", "N", p.ProdStock, 0, "")
 	sentencia = tools.ArmoSentencia(sentencia, "Prod_Title", "S", 0, 0, p.ProdPath)
 
@@ -150,7 +150,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 	case "S":
 		where = " WHERE UCASE(CONCAT(Prod_Title,Prod_Description)) LIKE '%" + strings.ToUpper(p.ProdSearch) + "%'"
 	case "C":
-		where = " WHERE Prod_CategoryId= " + strconv.Itoa(p.ProdCategId)
+		where = " WHERE Prod_CategoryId= " + strconv.Itoa(p.ProdCategoryId)
 	case "U":
 		where = " WHERE UCASE(Prod_Path) LIKE '%" + strings.ToUpper(p.ProdPath) + "%'"
 	case "K":
@@ -244,7 +244,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 		p.ProdUpdated = ProdUpdated.Time.String()
 		p.ProdPrice = ProdPrice.Float64
 		p.ProdPath = ProdPath.String
-		p.ProdCategId = int(ProdCategId.Int32)
+		p.ProdCategoryId = int(ProdCategId.Int32)
 		p.ProdStock = int(ProdStock.Int32)
 
 		Prod = append(Prod, p)

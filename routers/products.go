@@ -98,7 +98,7 @@ func SelectProduct(request events.APIGatewayV2HTTPRequest) (int, string) {
 	}
 	if len(param["categId"]) > 0 {
 		choice = "C"
-		t.ProdCategId, _ = strconv.Atoi(param["categId"])
+		t.ProdCategoryId, _ = strconv.Atoi(param["categId"])
 	}
 	if len(param["slug"]) > 0 {
 		choice = "U"
