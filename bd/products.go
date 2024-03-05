@@ -148,7 +148,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 	case "P":
 		where = " WHERE Prod_Id = " + strconv.Itoa(p.ProdId)
 	case "S":
-		where = " WHERE UCASE(CONCAT(Prod_Title,Prod_Description,)) LIKE '%" + strings.ToUpper(p.ProdSearch) + "%'"
+		where = " WHERE UCASE(CONCAT(Prod_Title,Prod_Description)) LIKE '%" + strings.ToUpper(p.ProdSearch) + "%'"
 	case "C":
 		where = " WHERE Prod_CategoryId= " + strconv.Itoa(p.ProdCategId)
 	case "U":
@@ -159,18 +159,24 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 		sentenciaCount += join
 	}
 	sentenciaCount += where
+
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
-	defer rows.Close()
-
 	if err != nil {
 		fmt.Println(err.Error())
 		return Resp, err
 	}
 
+	defer rows.Close()
+
 	rows.Next()
 	var regi sql.NullInt32
 	err = rows.Scan(&regi)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return Resp, err
+	}
 
 	registros := int(regi.Int32)
 
@@ -212,7 +218,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 	}
 	sentencia += where + orderBy + limit
 	fmt.Println("selecProducts > " + sentencia)
-	rows, err = Db.Query(sentencia)
+	rows, _ = Db.Query(sentencia)
 
 	for rows.Next() {
 		var p models.Product
