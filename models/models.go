@@ -33,3 +33,7 @@ type Product struct {
 	ProdSearch      string  `json:"prodSearch,omitempty"`
 	ProdCategPath   string  `json:"prodCategPath,omitempty"`
 }
+type ProductResp struct {
+	TotalItems int       `json:"totalItems"`
+	Data       []Product `json:"data"`
+}

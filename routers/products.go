@@ -2,8 +2,11 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
+	"strings"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/garciaroa/gambitcloud/bd"
 	"github.com/garciaroa/gambitcloud/models"
 )
@@ -64,6 +67,57 @@ func DeleteProduct(User string, id int) (int, string) {
 		return 400, "Ocurrio un error al intentar realizar el DELETE  del producto" + strconv.Itoa(id) + ">" + err.Error()
 	}
 
-	return 200, "Update ok"
+	return 200, "Delete ok"
 
+}
+func SelectProduct(request events.APIGatewayV2HTTPRequest) (int, string) {
+	var t models.Product
+	//var err error
+	var page, pageSize int
+	var orderType, orderField string
+
+	param := request.QueryStringParameters
+	page, _ = strconv.Atoi(param["page"])
+	pageSize, _ = strconv.Atoi(param["pageSize"])
+	orderType = param["orderType"]   //D= desc - (A o Nil) = ASC
+	orderField = param["orderField"] // ('I' por Id), ('T' Title), ('D' Description), ('F' Created At) ('P' Price), ('C' CategId), ('S' Stock)
+
+	if !strings.Contains("ITDFPCS", orderField) {
+		orderField = ""
+	}
+
+	var choice string
+
+	if len(param["prodId"]) > 0 {
+		choice = "P"
+		t.ProdId, _ = strconv.Atoi(param["prodId"])
+	}
+	if len(param["search"]) > 0 {
+		choice = "S"
+		t.ProdSearch = param["search"]
+	}
+	if len(param["categId"]) > 0 {
+		choice = "C"
+		t.ProdCategId, _ = strconv.Atoi(param["categId"])
+	}
+	if len(param["slug"]) > 0 {
+		choice = "U"
+		t.ProdPath, _ = param["slug"]
+	}
+	if len(param["slugCateg"]) > 0 {
+		choice = "K"
+		t.ProdCategPath = param["slugCateg"]
+	}
+	fmt.Println(param)
+	result, err2 := bd.SelectProduct(t, choice, page, pageSize, orderType, orderField)
+	if err2 != nil {
+		return 400, "selectProduct > Ocurrio un error al intentar capturar los resultados de la busqueda de tipo '" + choice + "' en products"
+	}
+
+	product, err3 := json.Marshal(result)
+	if err3 != nil {
+		return 400, "selectProduct > Ocurrio un error al intentar convertir en JSON la busqueda de Productos"
+	}
+
+	return 200, string(product)
 }
