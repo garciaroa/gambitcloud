@@ -154,14 +154,14 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 	case "U":
 		where = " WHERE UCASE(Prod_Path) LIKE '%" + strings.ToUpper(p.ProdPath) + "%'"
 	case "K":
-		join := " JOIN category ON Prod_CategoryId = Categ_Id"
+		join := " JOIN category ON Prod_CategoryId = Categ_Id AND Categ_Path LIKE '%" + strings.ToUpper(p.ProdCategPath) + "%' "
 		sentencia += join
 		sentenciaCount += join
 	}
 	sentenciaCount += where
 	fmt.Println("selectProduct > sentencia : " + sentencia)
 	var rows *sql.Rows
-	rows, err = Db.Query(sentencia)
+	rows, err = Db.Query(sentenciaCount)
 	if err != nil {
 		fmt.Println(err.Error())
 		return Resp, err
