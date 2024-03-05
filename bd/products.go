@@ -159,7 +159,7 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 		sentenciaCount += join
 	}
 	sentenciaCount += where
-
+	fmt.Println("selectProduct > sentencia : " + sentencia)
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
 	if err != nil {
