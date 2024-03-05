@@ -217,8 +217,12 @@ func SelectProduct(p models.Product, choice string, page int, pageSize int, orde
 		}
 	}
 	sentencia += where + orderBy + limit
-	fmt.Println("selecProducts > " + sentencia)
-	rows, _ = Db.Query(sentencia)
+	fmt.Println("selecProducts > 220" + sentencia)
+	rows, err = Db.Query(sentencia)
+	if err != nil {
+		fmt.Println("selecProducts > 223 " + sentencia)
+		return Resp, err
+	}
 
 	for rows.Next() {
 		var p models.Product
