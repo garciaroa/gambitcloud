@@ -14,7 +14,7 @@ func UpdateUser(UField models.User, User string) error {
 		return err
 	}
 	defer Db.Close()
-	sentencia := "UPDATE users SET"
+	sentencia := "UPDATE users SET "
 	coma := ""
 	if len(UField.UserFirstName) > 0 {
 		coma = ","
