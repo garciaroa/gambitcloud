@@ -74,7 +74,7 @@ func ProcesoCategory(body string, path string, method string, user string, id in
 }
 
 func ProcesoStock(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
-	return 400, "method invalido - ProcesoStock"
+	return routers.UpdateStock(body, user, id)
 }
 
 func ProcesoAddress(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
