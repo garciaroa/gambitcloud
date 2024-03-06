@@ -1,6 +1,7 @@
 package bd
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/garciaroa/gambitcloud/models"
@@ -33,4 +34,45 @@ func UpdateUser(UField models.User, User string) error {
 
 	fmt.Println("actualizacion usuario 35> Ejecucion exitosa")
 	return nil
+}
+
+func SelectUser(UserId string) (models.User, error) {
+	fmt.Println("Comienza SelecUser")
+	User := models.User{}
+
+	err := DbConnect()
+	if err != nil {
+		return User, err
+	}
+	defer Db.Close()
+
+	sentencia := "SELECT * FROM user WHERE User_UUID = '" + UserId + "'"
+
+	var rows *sql.Rows
+	rows, err = Db.Query(sentencia)
+	if err != nil {
+		fmt.Println("bd/usuario 54" + err.Error())
+		return User, err
+	}
+
+	defer func() {
+		if err := rows.Close(); err != nil {
+			fmt.Println("bd/usuario 61" + err.Error())
+		}
+	}()
+
+	rows.Next()
+	var firstName sql.NullString
+	var lastName sql.NullString
+	var dateUpg sql.NullTime
+
+	rows.Scan(&User.UserUUID, &User.UserEmail, &firstName, &lastName, &User.UserStatus, &User.UserDateAdd, &dateUpg)
+
+	User.UserFirstName = firstName.String
+	User.UserLastName = lastName.String
+	User.UserDateUpd = dateUpg.Time.String()
+
+	fmt.Println("Select User > Ejecucion Exitosa")
+	return User, nil
+
 }
