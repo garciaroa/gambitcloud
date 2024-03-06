@@ -24,7 +24,7 @@ func UpdateUser(UField models.User, User string) error {
 		sentencia += coma + "User_LastName = '" + UField.UserFirstName + "'"
 	}
 	sentencia += ", User_DataUpg = '" + tools.FechaMySQL() + "' WHERE User_UUID='" + User + "'"
-
+	fmt.Println("usuario 27> sentencia :.. " + sentencia)
 	_, err = Db.Exec(sentencia)
 	if err != nil {
 		fmt.Println(err.Error())
