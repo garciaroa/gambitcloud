@@ -39,6 +39,12 @@ func Manejadores(path string, method string, body string, headers map[string]str
 }
 
 func ProcesoUsers(body string, path string, method string, user string, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	if path == "user/me" {
+		switch method {
+		case "PUT":
+			return routers.UpdateUser(body, user)
+		}
+	}
 	return 400, "method invalido - ProcesoUsers"
 }
 
