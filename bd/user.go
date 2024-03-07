@@ -62,17 +62,17 @@ func SelectUser(UserId string) (models.User, error) {
 	}()
 
 	rows.Next()
-	/*var firstName sql.NullString*/
+	var firstName sql.NullString
 	var lastName sql.NullString
 	var dateUpg sql.NullTime //sql.NullString //sql.NullTime
 
 	fmt.Println("bd/user 68 > antes del panic ")
 
-	rows.Scan(&User.UserUUID, &User.UserEmail, &User.UserFirstName, &lastName, &User.UserStatus, &User.UserDateAdd, &dateUpg) //&User.UserDateUpd)
+	rows.Scan(&User.UserUUID, &User.UserEmail, &firstName, &lastName, &User.UserStatus, &User.UserDateAdd, &dateUpg) //&User.UserDateUpd)
 
 	fmt.Println("bd/user 70 > rows.scan ")
-	/*
-		User.UserFirstName = firstName.String*/
+
+	User.UserFirstName = firstName.String
 	User.UserLastName = lastName.String
 	User.UserDateUpd = dateUpg.Time.String()
 
