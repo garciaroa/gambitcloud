@@ -66,7 +66,7 @@ func SelectUser(UserId string) (models.User, error) {
 	var lastName sql.NullString
 	var dateUpg sql.NullString //sql.NullTime
 	fmt.Println("bd/user 68 > antes del panic ")
-	errScan := rows.Scan(&User.UserUUID, &User.UserEmail, &firstName, &lastName, &User.UserStatus, &User.UserDateAdd, &dateUpg)
+	errScan := rows.Scan(&User.UserUUID, &User.UserEmail, &User.UserFirstName, &lastName, &User.UserStatus, &User.UserDateAdd, &dateUpg)
 	fmt.Println("bd/user 70 > rows.scan " + errScan.Error())
 	User.UserFirstName = firstName.String
 	User.UserLastName = lastName.String
