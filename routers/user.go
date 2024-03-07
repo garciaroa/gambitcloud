@@ -2,7 +2,6 @@ package routers
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/garciaroa/gambitcloud/bd"
 	"github.com/garciaroa/gambitcloud/models"
@@ -40,7 +39,7 @@ func SelectUser(body string, User string) (int, string) {
 	}
 
 	row, err := bd.SelectUser(User)
-	fmt.Println("usuario 43 >" + err.Error())
+
 	if err != nil {
 		return 400, "Ocurrio un error al intentar realizar el selected del usuario " + User + " > " + err.Error()
 	}
