@@ -46,8 +46,7 @@ func SelectUser(UserId string) (models.User, error) {
 	}
 	defer Db.Close()
 
-	sentencia := "SELECT * FROM users WHERE User_UUID = 1 "
-	//sentencia := "SELECT * FROM users WHERE User_UUID = '" + UserId + "'"
+	sentencia := "SELECT * FROM users WHERE User_UUID = '" + UserId + "'"
 
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
@@ -69,7 +68,7 @@ func SelectUser(UserId string) (models.User, error) {
 
 	fmt.Println("bd/user 68 > antes del panic ")
 
-	rows.Scan(&User.UserUUID, &User.UserEmail, &firstName, &lastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd) //&User.UserDateUpd)
+	rows.Scan(&User.UserUUID, &User.UserEmail, &firstName, &lastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd) //&User.UserDateUpd) de bd TIME a Strng en modelo user y es llenado con vacio ""
 
 	fmt.Println("bd/user 70 > rows.scan ")
 
