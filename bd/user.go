@@ -46,7 +46,7 @@ func SelectUser(UserId string) (models.User, error) {
 	}
 	defer Db.Close()
 
-	sentencia := "SELECT * FROM users WHERE User_UUID = '" + UserId + "'"
+	sentencia := "SELECT User_UUID, User_Email FROM users WHERE User_UUID = '" + UserId + "'"
 
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
@@ -68,7 +68,7 @@ func SelectUser(UserId string) (models.User, error) {
 
 	fmt.Println("bd/user 68 > antes del panic ")
 
-	errScan := rows.Scan(&User.UserUUID, &User.UserEmail, &User.UserFirstName, &User.UserLastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd)
+	errScan := rows.Scan(&User.UserUUID, &User.UserEmail) //, &User.UserFirstName, &User.UserLastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd)
 
 	fmt.Println("bd/user 70 > rows.scan " + errScan.Error())
 	/*
