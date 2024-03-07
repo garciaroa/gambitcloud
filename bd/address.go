@@ -20,7 +20,7 @@ func InsertAddress(addr models.Address, User string) error {
 		}
 	}()
 
-	sentencia := "INSERT INTO address (Add_UserID, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name)"
+	sentencia := "INSERT INTO addresses (Add_UserID, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name)"
 	sentencia += "VALUES ('" + User + "','" + addr.AddAddress + "','" + addr.AddCity + "','" + addr.AddState + "','"
 	sentencia += addr.AddPostalCode + "','" + addr.AddPhone + "','" + addr.AddTitle + "','" + addr.AddName + " ')"
 
