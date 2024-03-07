@@ -68,9 +68,9 @@ func SelectUser(UserId string) (models.User, error) {
 
 	fmt.Println("bd/user 68 > antes del panic ")
 
-	errScan := rows.Scan(&User.UserUUID, &User.UserEmail) //, &User.UserFirstName, &User.UserLastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd)
+	rows.Scan(&User.UserUUID, &User.UserEmail) //, &User.UserFirstName, &User.UserLastName, &User.UserStatus, &User.UserDateAdd, &User.UserDateUpd)
 
-	fmt.Println("bd/user 70 > rows.scan " + errScan.Error())
+	fmt.Println("bd/user 70 > rows.scan ")
 	/*
 		User.UserFirstName = firstName.String
 		User.UserLastName = lastName.String
