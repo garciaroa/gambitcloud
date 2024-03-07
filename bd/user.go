@@ -46,7 +46,8 @@ func SelectUser(UserId string) (models.User, error) {
 	}
 	defer Db.Close()
 
-	sentencia := "SELECT * FROM users WHERE User_UUID = '" + UserId + "'"
+	sentencia := "SELECT * FROM users WHERE User_UUID = 1 "
+	//sentencia := "SELECT * FROM users WHERE User_UUID = '" + UserId + "'"
 
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
