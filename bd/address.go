@@ -2,6 +2,8 @@ package bd
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/garciaroa/gambitcloud/models"
 )
@@ -33,4 +35,80 @@ func InsertAddress(addr models.Address, User string) error {
 	fmt.Println("bd/address 33 > sentencia" + sentencia)
 	fmt.Println("Insert Address 34 > Ejecucion Exitosa")
 	return nil
+}
+
+func AddressExists(User string, id int) (error, bool) {
+	fmt.Println("Comienza AddresExists")
+
+	err := DbConnect()
+	if err != nil {
+		return err, false
+	}
+	defer Db.Close()
+	sentencia := "SELECT 1 FROM addresses WHERE Add_Id=" + strconv.Itoa(id) + " AND Add_UserId= '" + User + "'"
+	fmt.Println(sentencia)
+
+	rows, err := Db.Query(sentencia)
+	if err != nil {
+		return err, false
+	}
+	var valor string
+	rows.Next()
+	rows.Scan(&valor)
+
+	fmt.Println("Address > ejecucion exitosa " + valor)
+	if valor == "1" {
+		return nil, true
+	}
+	return nil, false
+}
+
+func UpdateAddress(addr models.Address) error {
+	fmt.Println("comienza UpdateAddress")
+
+	err := DbConnect()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := Db.Close(); err != nil {
+			fmt.Println(" bd/address 74 > error al intentar cerrar la conexion DB")
+		}
+	}()
+
+	sentencia := "UPDATE addresses SET "
+	if addr.AddAddress != "" {
+		sentencia += "Add_Address = '" + addr.AddAddress + "', "
+	}
+	if addr.AddCity != "" {
+		sentencia += "Add_City = '" + addr.AddCity + "', "
+	}
+	if addr.AddName != "" {
+		sentencia += "Add_Name = '" + addr.AddName + "', "
+	}
+	if addr.AddPhone != "" {
+		sentencia += "Add_Phone = '" + addr.AddPhone + "', "
+	}
+	if addr.AddPostalCode != "" {
+		sentencia += "Add_PostalCode = '" + addr.AddPostalCode + "', "
+	}
+	if addr.AddState != "" {
+		sentencia += "Add_State = '" + addr.AddState + "', "
+	}
+	if addr.AddTitle != "" {
+		sentencia += "Add_Title = '" + addr.AddTitle + "', "
+	}
+	sentencia, _ = strings.CutSuffix(sentencia, ", ") //corta el ultio caracter ", "
+	sentencia += " WHERE Add_Id= " + strconv.Itoa(addr.AddId)
+
+	_, err = Db.Exec(sentencia)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+
+	fmt.Println("bd/address 110 > sentencia " + sentencia)
+	fmt.Println("Update Addres > Ejecucion Exitosa")
+	return nil
+
 }
