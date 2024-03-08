@@ -112,6 +112,9 @@ func SelectCategories(CategId int, Slug string) ([]models.Category, error) {
 
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
+	if err != nil {
+		return Categ, err
+	}
 
 	for rows.Next() {
 		var c models.Category

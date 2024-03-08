@@ -108,6 +108,10 @@ func ProcesoAddress(body string, path string, method string, user string, id int
 }
 
 func ProcesoOrder(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	switch method {
+	case "POST":
+		return routers.InsertOrder(body, user)
+	}
 	return 400, "method invalido - ProcesoOrder"
 }
 
