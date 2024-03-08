@@ -24,7 +24,7 @@ func InsertOrder(body string, User string) (int, string) {
 	}
 	result, err2 := bd.InsertOrder(o)
 	if err2 != nil {
-		return 400, "Ocurrio un error al intentar realizar el registro de la orden " + err.Error()
+		return 400, "Ocurrio un error al intentar realizar el registro de la orden " + err2.Error()
 	}
 
 	return 200, "{OrderID:" + strconv.Itoa(int(result)) + "}"
