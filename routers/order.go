@@ -2,6 +2,7 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 
 	"github.com/garciaroa/gambitcloud/bd"
@@ -35,15 +36,24 @@ func ValidOrder(o models.Orders) (bool, string) {
 		return false, "Debe indicar el total de la orden"
 	}
 	count := 0
+	fmt.Println("routers/order 39 > antes del range")
 	for _, od := range o.OrderDetail {
+		fmt.Println("routers/order 41 > ingresa al range")
 		if od.OD_ProId == 0 {
 			return false, "Debe Indicar el Id del producto en el detalle de la orden"
 		}
 		if od.OD_Quantity == 0 {
 			return false, "Debe Indicar la cantidad del producto en el detalle de la orden"
 		}
+
 		count++
+
+		fmt.Println("routers/order 51 > pasa el count" + strconv.Itoa(count))
+
 	}
+
+	fmt.Println("routers/order 55 > fuera del range" + strconv.Itoa(count))
+
 	if count == 0 {
 		return false, "Debe indicar items en la orden"
 	}
