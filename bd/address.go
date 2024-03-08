@@ -1,6 +1,7 @@
 package bd
 
 import (
+	"database/sql"
 	"fmt"
 	"strconv"
 	"strings"
@@ -138,5 +139,67 @@ func DeleteAddress(id int) error {
 	fmt.Println("bd/address 138 > sentencia " + sentencia)
 	fmt.Println("Delete Address > Ejecucion exitosa")
 	return nil
+
+}
+
+func SelectAddress(User string) ([]models.Address, error) {
+	fmt.Println("Comienza selectaddress")
+
+	addr := []models.Address{}
+	err := DbConnect()
+	if err != nil {
+		return addr, err
+	}
+	defer func() {
+		if err := Db.Close(); err != nil {
+			fmt.Println("bd/address 154 > error al intentar cerrar la conexion")
+			return
+		}
+	}()
+
+	sentencia := "SELECT Add_Id, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name, FROM addresses WHERE Add_UserId = '" + User + "'"
+
+	var rows *sql.Rows
+	rows, err = Db.Query(sentencia)
+	if err != nil {
+		fmt.Println("bd/address 165 > error al ejecutar la sentencia " + err.Error())
+		return nil, err
+	}
+	defer func() {
+		if err := rows.Close(); err != nil {
+			fmt.Println("bd/address 169 > error al cerrar la conexion a bd")
+			return
+		}
+	}()
+
+	for rows.Next() {
+		var a models.Address
+		var addId sql.NullInt16
+		var addAddress sql.NullString
+		var addCity sql.NullString
+		var addState sql.NullString
+		var addPostalCode sql.NullString
+		var addPhone sql.NullString
+		var addTitle sql.NullString
+		var addName sql.NullString
+
+		err := rows.Scan(&addId, &addAddress, &addCity, &addState, &addPostalCode, &addPhone, &addTitle, &addName)
+		if err != nil {
+			return addr, err
+		}
+
+		a.AddId = int(addId.Int16)
+		a.AddAddress = addAddress.String
+		a.AddCity = addCity.String
+		a.AddState = addState.String
+		a.AddPostalCode = addPostalCode.String
+		a.AddPhone = addPhone.String
+		a.AddTitle = addTitle.String
+		a.AddName = addName.String
+		addr = append(addr, a)
+	}
+
+	fmt.Println("Select Address > Ejecucion Exitosa ")
+	return addr, nil
 
 }
