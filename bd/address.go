@@ -157,12 +157,13 @@ func SelectAddress(User string) ([]models.Address, error) {
 		}
 	}()
 
-	sentencia := "SELECT Add_Id, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name, FROM addresses WHERE Add_UserID = '" + User + "'"
+	sentencia := "SELECT Add_Id, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name FROM addresses WHERE Add_UserID = '" + User + "'"
 
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
 	if err != nil {
-		fmt.Println("bd/address 165 > error al ejecutar la sentencia " + err.Error())
+		fmt.Println("bd/address 165 > sentencia " + sentencia)
+		fmt.Println("bd/address 166 > error al ejecutar la sentencia " + err.Error())
 		return nil, err
 	}
 	defer func() {
