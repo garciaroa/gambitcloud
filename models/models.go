@@ -76,7 +76,7 @@ type Orders struct {
 type OrdersDetails struct {
 	OD_Id       int     `json:"odId"`
 	OD_OrderId  int     `json:"odOrderId"`
-	OD_ProId    int     `json:"odProId"`
+	OD_ProId    int     `json:"odProdId"`
 	OD_Quantity int     `json:"odQuantity"`
 	OD_Price    float64 `json:"odPrice"`
 }
