@@ -19,6 +19,7 @@ func InsertOrder(o models.Orders) (int64, error) {
 
 	sentencia := "INSERT INTO orders (Order_UserUUID, Order_Total, Order_AddId) VALUES('"
 	sentencia += o.Order_UserUUID + "'" + strconv.FormatFloat(o.Order_Total, 'f', -1, 64) + "," + strconv.Itoa(o.Order_AddId) + ")"
+	fmt.Println("bd/order 22 > sentencia " + sentencia)
 
 	var result sql.Result
 	result, err = Db.Exec(sentencia)
