@@ -15,6 +15,8 @@ func InsertOrder(body string, User string) (int, string) {
 	if err != nil {
 		return 400, "Error en los datos recibidos"
 	}
+	fmt.Println("routers/order 18 > despues de unmarshal" + strconv.Itoa(len(o.OrderDetail)))
+	fmt.Println("routers/order 19 > despues de unmarshal - body:.. " + body)
 
 	o.Order_UserUUID = User
 
