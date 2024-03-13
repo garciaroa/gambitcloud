@@ -36,7 +36,7 @@ func ValidOrder(o models.Orders) (bool, string) {
 		return false, "Debe indicar el total de la orden"
 	}
 	count := 0
-	fmt.Println("routers/order 39 > antes del range")
+	fmt.Println("routers/order 39 > antes del range" + strconv.Itoa(len(o.OrderDetail)))
 	for _, od := range o.OrderDetail {
 		fmt.Println("routers/order 41 > ingresa al range")
 		if od.OD_ProId == 0 {
