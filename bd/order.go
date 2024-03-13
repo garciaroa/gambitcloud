@@ -8,6 +8,7 @@ import (
 	"github.com/garciaroa/gambitcloud/models"
 )
 
+// /InsertOrder inserta la orden
 func InsertOrder(o models.Orders) (int64, error) {
 	fmt.Println("Comienza Registro Oders")
 	err := DbConnect()
