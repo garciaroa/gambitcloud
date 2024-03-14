@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/garciaroa/gambitcloud/bd"
 	"github.com/garciaroa/gambitcloud/models"
 )
@@ -59,4 +60,35 @@ func ValidOrder(o models.Orders) (bool, string) {
 	}
 	return true, ""
 
+}
+
+func SelectOrders(user string, request events.APIGatewayV2HTTPRequest) (int, string) {
+
+	var fechaDesde, fechaHasta string
+	var orderId, page int
+
+	if len(request.QueryStringParameters["fechaDesde"]) > 0 {
+		fechaDesde = request.QueryStringParameters["fechadesde"]
+	}
+	if len(request.QueryStringParameters["fechaHasta"]) > 0 {
+		fechaDesde = request.QueryStringParameters["fechaHasta"]
+	}
+	if len(request.QueryStringParameters["page"]) > 0 {
+		fechaDesde = request.QueryStringParameters["page"]
+	}
+	if len(request.QueryStringParameters["orderId"]) > 0 {
+		fechaDesde = request.QueryStringParameters["orderId"]
+	}
+	result, err2 := bd.SelectOrders(user, fechaDesde, fechaHasta, page, orderId)
+	if err2 != nil {
+		return 400, "ocurrio un error al intentar capturar los registros de ordenes del " + fechaDesde + " al " + fechaHasta
+	}
+
+	fmt.Println("router/order > 86 ")
+	orders, err3 := json.Marshal(result)
+	if err3 != nil {
+		return 400, "Ocurrio un error al intentar convertir en JSON el registro de Orden"
+	}
+
+	return 200, string(orders)
 }
