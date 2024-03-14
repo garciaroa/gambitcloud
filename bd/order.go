@@ -98,7 +98,7 @@ func SelectOrders(user string, fechaDesde string, fechaHasta string, page int, o
 			fmt.Println("bd/order 98 > Error al intentar cerrar la conexion")
 		}
 	}()
-
+	fmt.Println("bd/order 101 > antes de ejecutar query ")
 	var rows *sql.Rows
 	rows, err = Db.Query(sentencia)
 	if err != nil {
@@ -110,17 +110,15 @@ func SelectOrders(user string, fechaDesde string, fechaHasta string, page int, o
 			fmt.Println("bd/order 110 > Error al intentar ejecutar la sentencia")
 		}
 	}()
-
+	fmt.Println("bd/order 101 > Despues de ejecutar query ")
 	for rows.Next() {
 		var Order models.Orders
-		var OrderDate sql.NullTime
 		var OrderAddId sql.NullInt32
-		err := rows.Scan(&Order.Order_Id, &Order.Order_UserUUID, &OrderAddId, &OrderDate, &Order.Order_Total)
+		err := rows.Scan(&Order.Order_Id, &Order.Order_UserUUID, &OrderAddId, &Order.Order_Date, &Order.Order_Total)
 		if err != nil {
 			return Orders, err
 		}
 
-		Order.Order_Date = OrderDate.Time.String()
 		Order.Order_AddId = int(OrderAddId.Int32)
 
 		var rowsD *sql.Rows
